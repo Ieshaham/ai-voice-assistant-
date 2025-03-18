@@ -6,6 +6,7 @@ class CookingAssistant {
     this.vapi = new Vapi(publicKey);
     this.setupEventListeners();
     this.responseData = null;
+    this.permissionsGranted = false;
   }
 
   // Check for media permissions
@@ -13,9 +14,11 @@ class CookingAssistant {
     try {
       // Request only audio permissions
       await navigator.mediaDevices.getUserMedia({ audio: true });
+      this.permissionsGranted = true;
       return true;
     } catch (error) {
       console.error('Media permissions error:', error);
+      this.permissionsGranted = false;
       return false;
     }
   }
